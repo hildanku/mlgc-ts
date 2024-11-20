@@ -1,0 +1,129 @@
+openapi: 3.0.3
+info:
+  title: Asclepius API
+  description: Deteksi Kanker
+  version: 1.0.0
+paths:
+  /predict:
+    post:
+      summary: Digunakan untuk mendeteksi kanker berdasarkan gambar
+      description: Mengirim gambar untuk dianalisis dan diprediksi apakah mengindikasikan kanker
+      operationId: predictCancer
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+                  description: Gambar yang akan dianalisis
+              required:
+                - image
+            encoding:
+              image:
+                contentType: image/*
+      responses:
+        '200':
+          description: Prediksi berhasil
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "success"
+                  message:
+                    type: string
+                    example: "Model is predicted successfully"
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                        example: "77bd90fc-c126-4ceb-828d-f048dddff746"
+                      result:
+                        type: string
+                        example: "Cancer"
+                      suggestion:
+                        type: string
+                        example: "Segera periksa ke dokter!"
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: "2023-12-22T08:26:41.834Z"
+        '400':
+          description: Gambar tidak sesuai ketentuan (misalnya ukuran lebih dari 1MB atau format tidak valid)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "error"
+                  message:
+                    type: string
+                    example: "File gambar tidak valid atau melebihi ukuran maksimum 1MB"
+        '500':
+          description: Terjadi kesalahan pada server
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "error"
+                  message:
+                    type: string
+                    example: "Internal server error"
+  /predict/histories:
+    get:
+      summary: Mengambil riwayat prediksi penyakit kanker
+      description: Mengambil daftar riwayat prediksi hasil kanker, termasuk hasil, saran, dan waktu prediksi
+      operationId: getPredictionHistories
+      responses:
+        '200':
+          description: Data berhasil diambil
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "success"
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          example: "13e907b3-4213-42ad-b12b-b9b7e12eb90e"
+                        history:
+                          type: object
+                          properties:
+                            result:
+                              type: string
+                              example: "Cancer"
+                            createdAt:
+                              type: string
+                              format: date-time
+                              example: "2023-12-22T10:04:40.341Z"
+                            suggestion:
+                              type: string
+                              example: "Segera periksa ke dokter!"
+                            id:
+                              type: string
+                              format: uuid
+                              example: "13e907b3-4213-42ad-b12b-b9b7e12eb90e"
+                required:
+                  - status
+                  - data

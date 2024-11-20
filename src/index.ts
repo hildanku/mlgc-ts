@@ -1,10 +1,56 @@
 import express, { type Request, type Response } from 'express';
+import multer from 'multer';
+import { predictClassification } from './controllers/predictions.controller';
+import * as tf from '@tensorflow/tfjs-node';
+import { loadModel } from './utils/model.utils';
 
 const app = express();
 const port = import.meta.env.PORT || 3000;
 
+  const upload = multer({
+    storage: multer.memoryStorage(),
+    limits: { fileSize: 5 * 1024 * 1024 },
+  });
+
+  let model: tf.GraphModel;
+
+  const initializeModel = async () => {
+      try {
+          model = await loadModel();
+          console.log('Model loaded successfully');
+      } catch (error) {
+          console.error('Failed to load model:', error);
+      }
+  };
+  
+  initializeModel();
+
 app.get('/healthcheck', (req: Request, res: Response) => {
-    res.send('Typescript')
+    res.send('API is running!')
+});
+
+// Typescript no overload matches this call
+// solving: https://stackoverflow.com/questions/70964519/typescript-no-overload-matches-this-call
+// remember to use Promise<any>
+app.post('/predict', upload.single('image'), async (req: Request, res: Response): Promise<any> => {
+    if (!req.file) {
+      return res.status(400).json({ message: 'No image uploaded' });
+    }
+  
+    try {
+      const imageBuffer = req.file.buffer;
+      const predictionResult = await predictClassification(model, imageBuffer);
+  
+      return res.json(predictionResult);
+    } catch (error) {
+      console.error('Prediction error:', error);
+      return res.status(500).json({ message: 'An error occurred while processing the image.' });
+    }
+});
+
+
+app.get('/predict/histories', (req: Request, res: Response) => {
+    res.send('predict history endpoint')
 });
 
 app.listen(port, () => {

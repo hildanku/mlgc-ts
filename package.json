@@ -1,0 +1,22 @@
+{
+  "name": "mlgc-ts",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "build": "tsc",
+    "serve": "bun dist/index.js"
+  },
+  "peerDependencies": {
+    "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.9.1",
+    "express": "^4.21.1",
+    "ts-node": "^10.9.2"
+  }
+}

@@ -17,9 +17,9 @@ const port = import.meta.env.PORT || 3000;
   const initializeModel = async () => {
       try {
           model = await loadModel();
-          console.log('Model loaded successfully');
+          console.log('Model sukses di load');
       } catch (error) {
-          console.error('Failed to load model:', error);
+          console.error('Gagal load model:', error);
       }
   };
   
@@ -34,7 +34,7 @@ app.get('/healthcheck', (req: Request, res: Response) => {
 // remember to use Promise<any>
 app.post('/predict', upload.single('image'), async (req: Request, res: Response): Promise<any> => {
     if (!req.file) {
-      return res.status(400).json({ message: 'No image uploaded' });
+      return res.status(400).json({ message: 'Tidak ada gambar yang di upload!' });
     }
   
     try {
@@ -43,8 +43,8 @@ app.post('/predict', upload.single('image'), async (req: Request, res: Response)
   
       return res.json(predictionResult);
     } catch (error) {
-      console.error('Prediction error:', error);
-      return res.status(500).json({ message: 'An error occurred while processing the image.' });
+      console.error('Prediksi gagal:', error);
+      return res.status(500).json({ message: 'Gagal memprediksi!' });
     }
 });
 

@@ -46,10 +46,13 @@ app.post('/predict', upload.single('image'), async (req: Request, res: Response)
       const imageBuffer = req.file.buffer;
       const predictionResult = await predictClassification(model, imageBuffer);
   
-      return res.json(predictionResult);
+      return res.status(201).json(predictionResult);
     } catch (error) {
       console.error('Prediksi gagal:', error);
-      return res.status(500).json({ message: 'Gagal memprediksi!' });
+      return res.status(400).json({
+        status: "fail",
+        message: "Terjadi kesalahan dalam melakukan prediksi"
+      });
     }
 });
 

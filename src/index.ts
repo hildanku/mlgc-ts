@@ -2,7 +2,7 @@ import express, { type Request, type Response } from 'express';
 import multer from 'multer';
 import { predictClassification } from './controllers/predictions.controller';
 import * as tf from '@tensorflow/tfjs-node';
-import { loadModel } from './utils/model.utils';
+import { loadModel } from './utils/model.util';
 import handleMulterError from './middlewares/multer.middleware';
 import { config } from './config';
 import cors from 'cors';

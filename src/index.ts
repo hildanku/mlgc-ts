@@ -3,13 +3,14 @@ import multer from 'multer';
 import { predictClassification } from './controllers/predictions.controller';
 import * as tf from '@tensorflow/tfjs-node';
 import { loadModel } from './utils/model.utils';
+import handleMulterError from './middlewares/multer.middleware';
 
 const app = express();
 const port = import.meta.env.PORT || 3000;
 
   const upload = multer({
     storage: multer.memoryStorage(),
-    limits: { fileSize: 5 * 1024 * 1024 },
+    limits: { fileSize: 1000000 },
   });
 
   let model: tf.GraphModel;
@@ -48,10 +49,11 @@ app.post('/predict', upload.single('image'), async (req: Request, res: Response)
     }
 });
 
-
 app.get('/predict/histories', (req: Request, res: Response) => {
     res.send('predict history endpoint')
 });
+
+app.use(handleMulterError);
 
 app.listen(port, () => {
     console.log(`run on ${port}`)

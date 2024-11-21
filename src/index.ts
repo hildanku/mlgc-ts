@@ -5,10 +5,12 @@ import * as tf from '@tensorflow/tfjs-node';
 import { loadModel } from './utils/model.utils';
 import handleMulterError from './middlewares/multer.middleware';
 import { config } from './config';
-
+import cors from 'cors';
 
 const app = express();
 const port = config.port;
+
+app.use(cors());
 
   const upload = multer({
     storage: multer.memoryStorage(),

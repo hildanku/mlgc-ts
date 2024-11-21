@@ -5,5 +5,6 @@ dotenv.config();
 
 export const config = {
     port: env.PORT || 3000,
-    modelPath: env.MODEL_PATH
+    modelPath: env.MODEL_PATH,
+    projectId: env.PROJECT_ID
 };

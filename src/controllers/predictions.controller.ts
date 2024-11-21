@@ -22,7 +22,19 @@ export const predictClassification = async (
 
     const { label, suggestion } = labelSuggestion(confidenceScore);
 
-    return { id, label, suggestion, createdAt };
+    // return { id, label, suggestion, createdAt };
+    const predictResult = {
+      status: 'success',
+      message: 'Model is predicted successfully',
+      data: {
+        id,
+        result: label,
+        suggestion: suggestion,
+        createdAt,
+      },
+    }
+    
+    return predictResult;
   } catch (error: any) {
     throw new Error(`Terjadi kesalahan dalam melakukan prediksi: ${error.message}`);
   }

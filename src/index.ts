@@ -1,6 +1,6 @@
 import express, { type Request, type Response } from 'express';
 import multer from 'multer';
-import { predictClassification } from './controllers/predictions.controller';
+import { predictClassification } from './services/predictions.service';
 import * as tf from '@tensorflow/tfjs-node';
 import { loadModel } from './utils/model.util';
 import handleMulterError from './middlewares/multer.middleware';

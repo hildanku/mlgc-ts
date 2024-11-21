@@ -1,7 +1,7 @@
 import * as tf from '@tensorflow/tfjs-node';
-import type { PredictionResult } from '../types/predictionresult';
-import { preprocessImage } from './preprocess.controller';
-import { labelSuggestion } from './labeling.controller';
+import type { PredictionResult } from '../types/predictions.type';
+import { preprocessImage } from './preprocess.service';
+import { labelSuggestion } from './labeling.service';
 import { v4 as uuidv4 } from 'uuid';
 
 // Main prediction function

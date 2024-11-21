@@ -4,10 +4,11 @@ import { predictClassification } from './controllers/predictions.controller';
 import * as tf from '@tensorflow/tfjs-node';
 import { loadModel } from './utils/model.utils';
 import handleMulterError from './middlewares/multer.middleware';
-import { PORT } from './config';
+import { config } from './config';
+
 
 const app = express();
-const port = PORT;
+const port = config.port;
 
   const upload = multer({
     storage: multer.memoryStorage(),

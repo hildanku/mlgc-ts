@@ -1,5 +1,9 @@
 import dotenv from 'dotenv';
+import { env } from 'process';
 
 dotenv.config();
 
-export const PORT = process.env.PORT || 5000;
+export const config = {
+    port: env.PORT || 3000,
+    modelPath: env.MODEL_PATH
+};

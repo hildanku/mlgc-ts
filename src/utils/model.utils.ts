@@ -1,8 +1,9 @@
 import * as tf from '@tensorflow/tfjs-node';
+import { config } from '../config';
 
 export const loadModel: () => Promise<tf.GraphModel> = async () => {
         
-        const modelPath: string = 'file:///home/x/Documents/mlgc-ts/model/model.json';
+        const modelPath: any = config.modelPath;
         const model = await tf.loadGraphModel(modelPath);
         
         console.log(`model loaded`, modelPath);

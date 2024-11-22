@@ -8,8 +8,12 @@
 - swagger.io
 - https://github.com/search?q=typescriptexpressarchitecture&type=repositories
 - https://github.com/expressjs/multer/issues/314
+- https://github.com/oven-sh/bun/issues/5273
+- https://bun.sh/guides/ecosystem/docker
 
-
+## Docker
+```docker build --pull -t mlgc-image .```
+```docker run -d -p 5000:5000 mlgc-image```
 To install dependencies:
 
 ```bash

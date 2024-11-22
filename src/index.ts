@@ -6,6 +6,7 @@ import { loadModel } from './utils/model.util';
 import handleMulterError from './middlewares/multer.middleware';
 import { config } from './config';
 import cors from 'cors';
+import { getPredictionHistory } from './services/firestore.service';
 
 const app = express();
 const port = config.port;
@@ -56,8 +57,9 @@ app.post('/predict', upload.single('image'), async (req: Request, res: Response)
     }
 });
 
-app.get('/predict/histories', (req: Request, res: Response) => {
-    res.send('predict history endpoint')
+app.get('/predict/histories', async (req: Request, res: Response): Promise<any> => {
+ const data = await getPredictionHistory();
+ return res.status(200).json(data);
 });
 
 app.use(handleMulterError);

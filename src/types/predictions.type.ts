@@ -8,3 +8,9 @@ export interface PredictionResult {
     createdAt: string | null;
   }
 }
+export interface PredictionData {
+  id: string;
+  result: string;
+  createdAt: string;
+  suggestion: string;
+}

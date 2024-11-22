@@ -1,8 +1,9 @@
 import * as tf from '@tensorflow/tfjs-node';
-import type { PredictionResult } from '../types/predictions.type';
+import type { PredictionResult, PredictionData } from '../types/predictions.type';
 import { preprocessImage } from './preprocess.service';
 import { labelSuggestion } from './labeling.service';
 import { v4 as uuidv4 } from 'uuid';
+import { storePrediction } from './firestore.service';
 
 // Main prediction function
 export const predictClassification = async (
@@ -33,6 +34,15 @@ export const predictClassification = async (
         createdAt,
       },
     }
+    const predictionData: PredictionData = {
+      id,
+      result: label,
+      suggestion: suggestion,
+      createdAt,
+    };
+
+    // Simpan hasil prediksi ke Firestore
+    await storePrediction(id, predictionData);
     
     return predictResult;
   } catch (error: any) {

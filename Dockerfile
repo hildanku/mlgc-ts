@@ -20,8 +20,8 @@ RUN cd /temp/prod && bun install --frozen-lockfile --production
 FROM base AS prerelease
 COPY --from=install /temp/dev/node_modules node_modules
 
-ENV MODEL_PATH=https://storage.googleapis.com/submissionmlgc-bucket-hildankutomo/model/model.json
-ENV PROJECT_ID=submissionmlgc-hildankutomo
+ENV MODEL_PATH=https://storage.googleapis.com/deploybet-mlgc/model/x_model.json
+ENV PROJECT_ID=deploy-442616
 
 COPY . .
 

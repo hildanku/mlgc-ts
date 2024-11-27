@@ -1,5 +1,3 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
-import { Link } from "react-router-dom"
 import {
   Sidebar,
   SidebarContent,
@@ -9,7 +7,9 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
+import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 
 // Menu items.
 const items = [
@@ -41,17 +41,18 @@ const items = [
 ]
 
 export function AppSidebar() {
+  const location = useLocation();
   return (
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>
-            
+
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton asChild isActive={location.pathname === item.url}>
                     <Link to={item.url}>
                       <item.icon />
                       <span>{item.title}</span>

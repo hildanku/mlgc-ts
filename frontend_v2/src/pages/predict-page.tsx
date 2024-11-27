@@ -23,41 +23,55 @@ const PredictPage = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto">
-      <Card>
-        <CardHeader>
-          <CardTitle>Predict Image</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <Input type="file" onChange={handleFileChange} accept="image/*" />
-            <Button type="submit" disabled={!file || isLoading}>
-              {isLoading ? 'Predicting...' : 'Predict'}
-            </Button>
-          </form>
-
-          {error && (
-            <Alert variant="destructive" className="mt-4">
-              <AlertTitle>Error</AlertTitle>
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
-          )}
-
-          {data && (
-            <Card className="mt-4">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+          <Card>
+            <CardHeader>
+              <CardTitle>Predict Image</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <Input type="file" onChange={handleFileChange} accept="image/*" />
+                <Button type="submit" disabled={!file || isLoading}>
+                  {isLoading ? 'Predicting...' : 'Predict'}
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
+          <Card>
+            <Card>
               <CardHeader>
                 <CardTitle>Prediction Result</CardTitle>
               </CardHeader>
               <CardContent>
-                <p><strong>ID:</strong> {data.data.id}</p>
-                <p><strong>Result:</strong> {data.data.result}</p>
-                <p><strong>Suggestion:</strong> {data.data.suggestion}</p>
-                <p><strong>Created At:</strong> {new Date(data.data.createdAt).toLocaleString()}</p>
+                {isLoading && <p>Processing image...</p>}
+
+                {error && (
+                  <Alert variant="destructive">
+                    <AlertTitle>Error</AlertTitle>
+                    <AlertDescription>{error}</AlertDescription>
+                  </Alert>
+                )}
+
+                {data && (
+                  <div className="space-y-2">
+                    <p><strong>ID:</strong> {data.data.id}</p>
+                    <p><strong>Result:</strong> {data.data.result}</p>
+                    <p><strong>Suggestion:</strong> {data.data.suggestion}</p>
+                    <p><strong>Created At:</strong> {new Date(data.data.createdAt).toLocaleString()}</p>
+                  </div>
+                )}
+
+                {!isLoading && !error && !data && (
+                  <p className="text-gray-500">No prediction results yet. Upload an image and click 'Predict' to get started.</p>
+                )}
               </CardContent>
             </Card>
-          )}
-        </CardContent>
-      </Card>
+
+          </Card>
+        </div>
+      </div>
     </div>
   );
 };
